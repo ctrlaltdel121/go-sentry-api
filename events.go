@@ -86,6 +86,13 @@ func (c *Client) GetProjectEvent(o Organization, p Project, eventID string) (Eve
 	return event, err
 }
 
+//GetProjectEvents will fetch all events for a project
+func (c *Client) GetProjectEvents(o Organization, p Project) ([]Event, *Link, error) {
+	var events []Event
+	link, err := c.doWithPagination("GET", fmt.Sprintf("projects/%s/%s/events", *o.Slug, *p.Slug), &events, nil)
+	return events, link, err
+}
+
 //GetLatestEvent will fetch the latest event for a issue
 func (c *Client) GetLatestEvent(i Issue) (Event, error) {
 	var event Event
